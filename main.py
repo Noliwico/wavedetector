@@ -20,7 +20,7 @@ def main():
             show_wave_text = True
             last_wave_time = time.time()
 
-        # Ha 2 másodpercen belül vagyunk az utolsó integetéstől, mutatjuk a feliratot
+        # If within 2 seconds of the last wave, display the text
         if show_wave_text:
             if time.time() - last_wave_time < 2.0:
                 cv2.putText(frame, "You waved at me!", (50, 50),

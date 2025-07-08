@@ -13,7 +13,7 @@ class HandDetector:
         )
         self.mp_draw = mp.solutions.drawing_utils
 
-        # Integetéshez szükséges változók
+        # Variables required for wave detection
         self.prev_x = None
         self.motion_direction = None
         self.wave_counter = 0
@@ -33,17 +33,17 @@ class HandDetector:
                         frame, hand_landmarks, self.mp_hands.HAND_CONNECTIONS
                     )
 
-                # Kiválasztjuk pl. az indexujj (8. landmark) X pozícióját
+                # Select e.g., the X position of the index finger (landmark 8)
                 index_finger_tip = hand_landmarks.landmark[8].x
 
-                # Mozgás irányának követése
+                # Tracking the direction of motion
                 if self.prev_x is not None:
                     dx = index_finger_tip - self.prev_x
-                    if abs(dx) > 0.02:  # mozgásküszöb (kis elmozdulásokat ne vegyen figyelembe)
+                    if abs(dx) > 0.02:  # motion threshold (ignore small movements)
                         direction = 'right' if dx > 0 else 'left'
                         if self.motion_direction and self.motion_direction != direction:
                             self.wave_counter += 1
-                            # Ha elég gyorsan vált irányt, és már 2-szer
+                            # If the direction changed quickly enough and already twice
                             if self.wave_counter >= 2 and time.time() - self.last_wave_time > 1.0:
                                 wave_detected = True
                                 self.wave_counter = 0
@@ -52,7 +52,7 @@ class HandDetector:
 
                 self.prev_x = index_finger_tip
         else:
-            # reseteljük, ha nincs kéz
+            # reset if no hand is detected
             self.prev_x = None
             self.motion_direction = None
             self.wave_counter = 0

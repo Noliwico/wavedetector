@@ -1,62 +1,53 @@
 # WaveDetector
 
-WaveDetector is a Python application that detects hand wave gestures in real time using a webcam. It utilizes [MediaPipe](https://github.com/google/mediapipe) for hand landmark detection and [OpenCV](https://opencv.org/) for video capture and display.
+WaveDetector is a Python application that uses your webcam to detect wave gestures in real time. It leverages [MediaPipe](https://github.com/google/mediapipe) for hand tracking and [OpenCV](https://opencv.org/) for video processing.
 
 ## Features
-- Real-time webcam hand tracking
-- Wave gesture recognition using hand landmark movement
-- Visual feedback with bounding boxes and keypoints
-- Lightweight and easy to use
+- Real-time hand detection via webcam
+- Wave gesture recognition based on motion direction changes
+- Visual feedback with live message overlay
+
+## Project Structure
+```
+WaveDetector/
+├── main.py                       # Main entry point
+└── detector/
+    └── hand_detector.py         # Hand detection and gesture logic
+```
 
 ## Installation
 
-### Requirements
-- Python 3.7+
-- OpenCV
-- MediaPipe
+### Prerequisites
+- Python 3.7 or later
 
 ### Install dependencies
-```bash
-pip install -r requirements.txt
-```
-If you don’t have a `requirements.txt` file, manually install:
 ```bash
 pip install opencv-python mediapipe
 ```
 
 ## Usage
-Run the application with:
+Run the main script to start detection:
 ```bash
 python main.py
 ```
 
-This will start capturing video from your default webcam. When a wave gesture is detected, the message `Wave Detected!` will be printed to the console.
+- The program opens your webcam.
+- If a wave gesture is detected, the text "You waved at me!" will appear on the screen for 2 seconds.
+- Press `q` to quit.
 
-## How It Works
-- The `WaveDetector` class (in `detector.py`) processes each video frame and extracts hand landmarks.
-- It tracks the horizontal movement of the hand across frames.
-- If it detects repeated left-right-left motion (or vice versa), it registers a wave.
-
-## Files
-- `main.py`: Captures video, runs detection, and displays results.
-- `detector.py`: Contains the wave detection logic.
-
-## Example
-You’ll see output like this when running:
-```
-Wave Detected!
-Wave Detected!
-```
-And your webcam feed will be displayed with hand landmarks visualized.
+## How Wave Detection Works
+- The `HandDetector` tracks the X-coordinate of the index finger.
+- If the direction of horizontal motion switches at least twice (left-right-left or right-left-right), and within a set time window, it counts as a wave.
+- If no hand is detected, internal counters reset.
 
 ## Use Cases
-- Touchless UI for kiosks or public installations
-- Gesture control for simple applications
-- Fun project for learning computer vision and ML
+- Fun gesture-based interaction
+- Educational projects using computer vision
+- Touchless interfaces or public kiosks
 
 ## License
-This project is licensed under the MIT License.
+MIT License
 
 ## Credits
-- [MediaPipe](https://mediapipe.dev/) for real-time hand tracking
-- [OpenCV](https://opencv.org/) for video processing
+- [MediaPipe](https://mediapipe.dev/) by Google for hand landmark tracking
+- [OpenCV](https://opencv.org/) for camera and image handling
