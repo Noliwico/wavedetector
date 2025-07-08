@@ -23,7 +23,7 @@ def main():
         # Ha 2 másodpercen belül vagyunk az utolsó integetéstől, mutatjuk a feliratot
         if show_wave_text:
             if time.time() - last_wave_time < 2.0:
-                cv2.putText(frame, "You waved at me and I can see it!", (50, 50),
+                cv2.putText(frame, "You waved at me and I can see it on other branch!", (50, 50),
                             cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
             else:
                 show_wave_text = False
